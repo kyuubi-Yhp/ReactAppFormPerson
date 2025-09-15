@@ -23,32 +23,39 @@ function App() {
   }
 
   function handelSetValueBtnClick(key) {
-    if (!form[key]) {
+    //положили в переменную значение key что бы отследить состояние массив ли в обьекте или ключ строки
+    // чисто для более короткой записи кода
+    let valueInputChange = form[key]
+
+    if (!valueInputChange) {
       setError(true)
       return
     }
 
+    if (Array.isArray(person[key])) {
+      valueInputChange = [...person[key], form[key]]
+    }
     setError(false)
-    setPerson({ ...person, [key]: form[key] })
+    setPerson({ ...person, [key]: valueInputChange })
   }
 
-return (
-  <div>
-    {isError ? (<p>ошибка формы</p>) : ''}
-    <input type="text"
-      name="name"
-      onChange={handelInputChange} />
-    <button onClick={() => handelSetValueBtnClick('name')}>задать имя</button>
+  return (
+    <div>
+      {isError ? (<p>ошибка формы</p>) : ''}
+      <input type="text"
+        name="name"
+        onChange={handelInputChange} />
+      <button onClick={() => handelSetValueBtnClick('name')}>задать имя</button>
 
-    <input type="text"
-      name="surname"
-      onChange={handelInputChange} />
-    <button onClick={() => handelSetValueBtnClick('surname')}>задать фамилию</button>
+      <input type="text"
+        name="surname"
+        onChange={handelInputChange} />
+      <button onClick={() => handelSetValueBtnClick('surname')}>задать фамилию</button>
 
-    <input type="number"
-      name="age"
-      onChange={handelInputChange} />
-    <button onClick={() => handelSetValueBtnClick('age')}>задать возраст</button>
+      <input type="number"
+        name="age"
+        onChange={handelInputChange} />
+      <button onClick={() => handelSetValueBtnClick('age')}>задать возраст</button>
 
       <p>
         пол:
@@ -63,23 +70,23 @@ return (
         >задать пол</button>
       </p>
 
-    <input type="text"
-      name="interest"
-      onChange={handelInputChange} />
-    <button onClick={() => handelSetValueBtnClick('interest')}>добавить интерес</button>
+      <input type="text"
+        name="interest"
+        onChange={handelInputChange} />
+      <button onClick={() => handelSetValueBtnClick('interest')}>добавить интерес</button>
 
-    <p>имя: {person.name}</p>
-    <p>фамилия: {person.surname}</p>
-    <p>возраст: {person.age}</p>
+      <p>имя: {person.name}</p>
+      <p>фамилия: {person.surname}</p>
+      <p>возраст: {person.age}</p>
       <p>sex: {person.sex === 'male' ? 'мужской' : 'женский'}</p>
-    <p>interes: </p>
-    <div>{person.interest.map(function (item) {
-      return (
-        <p key={item}>{item}</p>
-      )
-    })}</div>
-  </div>
-)
+      <p>interes: </p>
+      <div>{person.interest.map(function (item) {
+        return (
+          <p key={item}>{item}</p>
+        )
+      })}</div>
+    </div>
+  )
 }
 
 export default App
